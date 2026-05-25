@@ -1,0 +1,18 @@
+- name: Overview
+  href: index.md
+
+- name: Guide
+  items:
+    - name: Introduction
+      href: guide/overview.md
+    - name: EHR & Versioning
+      href: guide/ehr.md
+    - name: Composition
+      href: guide/composition.md
+    - name: Common (Audit, Link, Party)
+      href: guide/common.md
+    - name: Data Structures
+      href: guide/data-structures.md
+
+- name: API Reference
+  href: ../../api/ehr/toc.yml

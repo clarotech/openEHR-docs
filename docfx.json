@@ -1,0 +1,133 @@
+{
+  // ---------------------------------------------------------------------------
+  // DocFX v2 configuration for the Clarotech openEHR documentation site.
+  //
+  // Assumes the three library repos are checked out as siblings of this repo:
+  //   ../openEHR-datatypes/   (Clarotech.OpenEHR.RM.Datatypes)
+  //   ../openEHR-ehr/         (Clarotech.OpenEHR.RM)
+  //   ../openEHR-json/        (Clarotech.OpenEHR.RM.Json)
+  //
+  // To build locally:
+  //   dotnet tool restore
+  //   dotnet tool run docfx docfx.json
+  //
+  // Output lands in _site/.  Serve locally with:
+  //   dotnet tool run docfx serve _site
+  // ---------------------------------------------------------------------------
+
+  // ── API METADATA ────────────────────────────────────────────────────────────
+  // Each entry runs DocFX's Roslyn-based metadata extraction against a .csproj.
+  // The generated YAML is written to the `dest` folder and then picked up by
+  // the build section below.
+  "metadata": [
+    {
+      "src": [
+        {
+          "src": "../openEHR-datatypes",
+          "files": ["openEHR-datatypes/openEHR-datatypes.csproj"]
+        }
+      ],
+      "dest": "api/datatypes",
+      "namespaceLayout": "nested",
+      "memberLayout": "separatePages",
+      "allowCompilationErrors": true,
+      "properties": {
+        "TargetFramework": "net8.0"
+      },
+      "filter": "filter.yml"
+    },
+    {
+      "src": [
+        {
+          "src": "../openEHR-ehr",
+          "files": ["openEHR-ehr/openEHR-ehr.csproj"]
+        }
+      ],
+      "dest": "api/ehr",
+      "namespaceLayout": "nested",
+      "memberLayout": "separatePages",
+      "allowCompilationErrors": true,
+      "properties": {
+        "TargetFramework": "net8.0"
+      },
+      "filter": "filter.yml"
+    },
+    {
+      "src": [
+        {
+          "src": "../openEHR-json",
+          "files": ["openEHR-json/openEHR-json.csproj"]
+        }
+      ],
+      "dest": "api/json",
+      "namespaceLayout": "nested",
+      "memberLayout": "separatePages",
+      "allowCompilationErrors": true,
+      "properties": {
+        "TargetFramework": "net8.0"
+      },
+      "filter": "filter.yml"
+    }
+  ],
+
+  // ── SITE BUILD ──────────────────────────────────────────────────────────────
+  "build": {
+
+    // Content globs: both hand-authored markdown and generated API YAML.
+    "content": [
+      // Generated API reference YAML (produced by the metadata step above)
+      {
+        "files": ["api/**/*.yml", "api/**/*.md"]
+      },
+      // Conceptual / guide markdown
+      {
+        "files": ["docs/**/*.md", "docs/**/toc.yml"]
+      },
+      // Root-level pages
+      {
+        "files": ["toc.yml", "index.md"]
+      }
+    ],
+
+    // Static assets (images, custom CSS, favicon, logo)
+    "resource": [
+      {
+        "files": ["images/**", "public/**"]
+      }
+    ],
+
+    // Template stack: modern overrides default; clarotech overrides modern.
+    // The clarotech layer only contains files that differ from the upstream.
+    "template": ["default", "modern", "templates/clarotech"],
+
+    // ── Global metadata ──────────────────────────────────────────────────────
+    "globalMetadata": {
+      "_appName": "Clarotech openEHR",
+      "_appTitle": "Clarotech openEHR Documentation",
+      // TODO: replace logo.svg with the real Claro Consulting logo asset
+      "_appLogoPath": "images/logo.svg",
+      // TODO: replace with real favicon (place favicon.ico in images/)
+      "_appFaviconPath": "images/favicon.ico",
+      "_enableSearch": true,
+      // Show "Edit this page" links pointing back to the docs repo
+      "_disableContribution": false,
+      "_gitContribute": {
+        "repo": "https://github.com/clarotech/openEHR-docs",
+        "branch": "main",
+        "path": ""
+      },
+      "_appFooter": "© Claro Consulting Ltd. Docs licensed under <a href='https://creativecommons.org/licenses/by/4.0/'>CC-BY 4.0</a>. Libraries licensed under <a href='https://www.apache.org/licenses/LICENSE-2.0'>Apache 2.0</a>."
+    },
+
+    // Per-file metadata overrides (add as needed)
+    "fileMetadata": {},
+
+    // Output directory (served directly by GitHub Pages)
+    "output": "_site",
+
+    // Sitemap for search-engine discoverability
+    "sitemap": {
+      "baseUrl": "https://clarotech.github.io/openEHR-docs"
+    }
+  }
+}

@@ -1,0 +1,28 @@
+# DocFX API filter rules
+# https://dotnet.github.io/docfx/docs/dotnet-api-docs.html#filter-api
+#
+# Exclude compiler-generated infrastructure and test fixtures; expose everything
+# else that is public or protected.
+
+apiRules:
+
+  # Strip compiler-generated types (anonymous types, display classes, etc.)
+  - exclude:
+      hasAttribute:
+        uid: System.Runtime.CompilerServices.CompilerGeneratedAttribute
+
+  # Strip NUnit / xUnit test classes that might be pulled in via project references
+  - exclude:
+      uidRegex: .*Tests.*
+      type: Type
+
+  # Strip internal implementation details exposed only for testing
+  - exclude:
+      uidRegex: .*\.Internal\..*
+      type: Namespace
+
+  # Keep everything else
+  - include:
+      type: Type
+  - include:
+      type: Member

@@ -1,0 +1,115 @@
+name: Build and Deploy Docs
+
+# Trigger on pushes to main and allow manual runs.
+# Pull-request builds run without the deploy step so previews are validated
+# without publishing.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+# The gh-pages deploy action needs write access to contents.
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    name: DocFX build → gh-pages
+    runs-on: ubuntu-latest
+
+    # All `run` steps execute from within the docs repo checkout.
+    defaults:
+      run:
+        working-directory: openEHR-docs
+
+    steps:
+      # ── Checkout all four repos ────────────────────────────────────────────
+      # Checking out into named subdirectories of $GITHUB_WORKSPACE means the
+      # sibling layout mirrors a local developer checkout:
+      #
+      #   $GITHUB_WORKSPACE/
+      #   ├── openEHR-docs/        ← this repo
+      #   ├── openEHR-datatypes/
+      #   ├── openEHR-ehr/
+      #   └── openEHR-json/
+      #
+      # From within openEHR-docs/, `../openEHR-datatypes` etc. are valid paths,
+      # which matches docfx.json exactly.
+
+      - name: Checkout openEHR-docs
+        uses: actions/checkout@v4
+        with:
+          path: openEHR-docs
+
+      - name: Checkout openEHR-datatypes
+        uses: actions/checkout@v4
+        with:
+          repository: clarotech/openEHR-datatypes
+          path: openEHR-datatypes
+
+      - name: Checkout openEHR-ehr
+        uses: actions/checkout@v4
+        with:
+          repository: clarotech/openEHR-ehr
+          path: openEHR-ehr
+
+      - name: Checkout openEHR-json
+        uses: actions/checkout@v4
+        with:
+          repository: clarotech/openEHR-json
+          path: openEHR-json
+
+      # ── .NET toolchain ────────────────────────────────────────────────────
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
+
+      # ── NuGet cache ───────────────────────────────────────────────────────
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          # Key includes all csproj hashes so cache busts on dependency changes.
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+      # ── Restore NuGet for all three library projects ──────────────────────
+      # DocFX uses Roslyn to parse source directly (no need to compile), but it
+      # still needs restored packages to resolve reference assemblies and XML
+      # doc files from NuGet dependencies.
+      - name: Restore NuGet — datatypes
+        run: dotnet restore ../openEHR-datatypes/openEHR-datatypes/openEHR-datatypes.csproj
+
+      - name: Restore NuGet — ehr
+        run: dotnet restore ../openEHR-ehr/openEHR-ehr/openEHR-ehr.csproj
+
+      - name: Restore NuGet — json
+        run: dotnet restore ../openEHR-json/openEHR-json/openEHR-json.csproj
+
+      # ── DocFX ─────────────────────────────────────────────────────────────
+      - name: Restore .NET local tools (installs DocFX)
+        run: dotnet tool restore
+
+      - name: Generate API metadata
+        run: dotnet tool run docfx metadata docfx.json
+
+      - name: Build DocFX site
+        run: dotnet tool run docfx build docfx.json
+
+      # ── Deploy (main branch only) ─────────────────────────────────────────
+      - name: Deploy to GitHub Pages (gh-pages branch)
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # publish_dir is relative to $GITHUB_WORKSPACE, not working-directory.
+          publish_dir: ./openEHR-docs/_site
+          # Keeps gh-pages history lean; set to false if you want full history.
+          force_orphan: true
+          # Adds a .nojekyll file so GitHub doesn't try to run Jekyll on the output.
+          enable_jekyll: false
+          commit_message: "docs: deploy ${{ github.sha }}"

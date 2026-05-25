@@ -1,0 +1,19 @@
+# DocFX generated output
+_site/
+
+# DocFX generated API YAML (re-generated on each build; do not commit)
+api/datatypes/
+api/ehr/
+api/json/
+
+# DocFX cache
+.cache/
+
+# .NET tool output
+*.user
+obj/
+bin/
+
+# OS
+.DS_Store
+Thumbs.db

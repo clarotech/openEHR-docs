@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 40" width="200" height="40">
+  <!--
+    TODO: Replace this placeholder SVG with the real Claro Consulting logo.
+    Place the production file at images/logo.svg (or images/logo.png — update
+    _appLogoPath in docfx.json accordingly).
+  -->
+  <rect width="200" height="40" rx="4" fill="#003366"/>
+  <text x="12" y="26" font-family="Segoe UI, Arial, sans-serif" font-size="16"
+        font-weight="600" fill="#ffffff" letter-spacing="0.5">
+    Clarotech
+  </text>
+  <text x="112" y="26" font-family="Segoe UI, Arial, sans-serif" font-size="13"
+        fill="#cce0ff" letter-spacing="0.3">
+    openEHR
+  </text>
+</svg>

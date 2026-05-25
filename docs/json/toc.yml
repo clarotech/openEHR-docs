@@ -1,0 +1,14 @@
+- name: Overview
+  href: index.md
+
+- name: Guide
+  items:
+    - name: Introduction
+      href: guide/overview.md
+    - name: Serialisation
+      href: guide/serialization.md
+    - name: Deserialisation
+      href: guide/deserialization.md
+
+- name: API Reference
+  href: ../../api/json/toc.yml

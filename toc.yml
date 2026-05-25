@@ -1,0 +1,23 @@
+- name: Introduction
+  href: docs/introduction/toc.yml
+  topicHref: docs/introduction/overview.md
+
+- name: Data Types
+  href: docs/datatypes/toc.yml
+  topicHref: docs/datatypes/index.md
+
+- name: EHR Reference Model
+  href: docs/ehr/toc.yml
+  topicHref: docs/ehr/index.md
+
+- name: JSON Serialisation
+  href: docs/json/toc.yml
+  topicHref: docs/json/index.md
+
+- name: Integration Guides
+  href: docs/integration/toc.yml
+  topicHref: docs/integration/index.md
+
+- name: Changelog
+  href: docs/changelog/toc.yml
+  topicHref: docs/changelog/index.md

@@ -1,0 +1,22 @@
+- name: Overview
+  href: index.md
+
+- name: Guide
+  items:
+    - name: Introduction
+      href: guide/overview.md
+    - name: Basic Data Types
+      href: guide/basic.md
+    - name: Text Types
+      href: guide/text.md
+    - name: Quantity Types
+      href: guide/quantity.md
+    - name: Date & Time Types
+      href: guide/datetime.md
+    - name: Encapsulated Data
+      href: guide/encapsulated.md
+    - name: URI Types
+      href: guide/uri.md
+
+- name: API Reference
+  href: ../../api/datatypes/toc.yml
