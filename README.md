@@ -109,7 +109,6 @@ The site will be available at: **https://clarotech.github.io/openEHR-docs/**
 - [ ] Add `images/favicon.ico`
 - [ ] Update CSS variables in `templates/clarotech/public/main.css` with brand colours
 - [ ] Update `_appFooter` in `docfx.json` with final legal copy
-- [x] ~~openEHR-json metadata entry~~ — live
 
 ## Licence
 
