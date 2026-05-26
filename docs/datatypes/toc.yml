@@ -2,6 +2,7 @@
   href: index.md
 
 - name: Guide
+  topicHref: guide/overview.md
   items:
     - name: Introduction
       href: guide/overview.md
