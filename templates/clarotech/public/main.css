@@ -46,6 +46,36 @@
   color: #cce0ff !important;  /* TODO: Claro hover colour */
 }
 
+/* ── Navbar dropdowns ────────────────────────────────────────────────────────
+   Without this, dropdown items inherit --navbar-text (white) from the .nav-link
+   rule above but sit on Bootstrap's default white dropdown background, making
+   them invisible until hovered.  Give the panel a dark background to match the
+   navbar and ensure text is always readable.
+   ──────────────────────────────────────────────────────────────────────────── */
+.navbar .dropdown-menu {
+  background-color: #00438a;          /* slightly lighter than navbar for depth */
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.navbar .dropdown-item {
+  color: #ffffff !important;
+}
+
+.navbar .dropdown-item:hover,
+.navbar .dropdown-item:focus {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #cce0ff !important;
+}
+
+.navbar .dropdown-item.active,
+.navbar .dropdown-item:active {
+  background-color: var(--bs-primary);
+  color: #ffffff !important;
+}
+
 /* ── Logo sizing ─────────────────────────────────────────────────────────────
    TODO: Adjust once the real logo SVG is in place.
    ──────────────────────────────────────────────────────────────────────────── */
