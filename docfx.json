@@ -102,8 +102,8 @@
 
     // ── Global metadata ──────────────────────────────────────────────────────
     "globalMetadata": {
-      "_appName": "Clarotech openEHR",
-      "_appTitle": "Clarotech openEHR Documentation",
+      "_appName": "openEHR .NET",
+      "_appTitle": "openEHR .NET Documentation",
       // TODO: replace logo.svg with the real Claro Consulting logo asset
       "_appLogoPath": "images/logo.svg",
       // TODO: replace with real favicon (place favicon.ico in images/)

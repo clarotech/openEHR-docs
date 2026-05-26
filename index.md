@@ -40,6 +40,6 @@ var text = new DvText("Chief complaint: chest pain");
 
 ## About
 
-These libraries are developed and maintained by **[Claro Consulting](https://clarotech.github.io)** and are published under the **Apache 2.0** licence.
+These libraries are developed and maintained by **[Richard Kavanagh](https://www.linkedin.com/in/richardkavanagh/)** and are published under the **Apache 2.0** licence.
 
 The openEHR Reference Model is a freely available open standard published by the [openEHR Foundation](https://www.openehr.org/).
