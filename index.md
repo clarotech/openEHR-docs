@@ -15,7 +15,7 @@ _layout: landing
 |---|---|---|
 | [`Clarotech.OpenEHR.RM.Datatypes`](docs/datatypes/index.md) | [![NuGet](https://img.shields.io/nuget/v/Clarotech.OpenEHR.RM.Datatypes)](https://www.nuget.org/packages/Clarotech.OpenEHR.RM.Datatypes) | openEHR RM data types — `DvText`, `DvQuantity`, `DvDateTime`, `DvCodedText`, … |
 | [`Clarotech.OpenEHR.RM`](docs/ehr/index.md) | [![NuGet](https://img.shields.io/nuget/v/Clarotech.OpenEHR.RM)](https://www.nuget.org/packages/Clarotech.OpenEHR.RM) | openEHR RM structural classes — `Composition`, `Entry`, `Section`, `Element`, … |
-| [`Clarotech.OpenEHR.RM.Json`](docs/json/index.md) | *(coming soon)* | JSON serialisation/deserialisation for the above two libraries |
+| [`Clarotech.OpenEHR.RM.Json`](docs/json/index.md) | [![NuGet](https://img.shields.io/nuget/v/Clarotech.OpenEHR.RM.Json)](https://www.nuget.org/packages/Clarotech.OpenEHR.RM.Json) | JSON serialisation/deserialisation for the above two libraries |
 
 ---
 
@@ -24,6 +24,7 @@ _layout: landing
 ```bash
 dotnet add package Clarotech.OpenEHR.RM.Datatypes
 dotnet add package Clarotech.OpenEHR.RM
+dotnet add package Clarotech.OpenEHR.RM.Json
 ```
 
 ```csharp
