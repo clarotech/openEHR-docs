@@ -9,6 +9,17 @@ Source: [clarotech/openEHR-ehr](https://github.com/clarotech/openEHR-ehr)
 
 ---
 
+## 1.1.0
+
+> Maintenance release — dependency and compatibility update.
+
+### Changed
+
+- Minimum dependency on `Clarotech.OpenEHR.RM.Datatypes` updated to align with the
+  renamed package. No API or behaviour changes from 1.0.0.
+
+---
+
 ## 1.0.0
 
 > Aligns with openEHR RM Release 1.1.0
@@ -24,7 +35,7 @@ Source: [clarotech/openEHR-ehr](https://github.com/clarotech/openEHR-ehr)
 - `Contribution`, `OriginalVersion<T>`, `ImportedVersion<T>`
 - Full `AuditDetails`, `Attestation`, party types
 - `IValidatableObject` on `Composition` and all `Locatable` subclasses
-- Depends on `Clarotech.OpenEHR.RM.Datatypes` ≥ 1.1.0
+- Depends on `Clarotech.OpenEHR.RM.Datatypes` ≥ 1.0.0
 
 ---
 

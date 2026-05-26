@@ -9,7 +9,7 @@ Source: [clarotech/openEHR-datatypes](https://github.com/clarotech/openEHR-datat
 
 ---
 
-## 1.1.0
+## 1.0.0
 
 > Aligns with openEHR RM Release 1.1.0
 
@@ -24,13 +24,14 @@ Source: [clarotech/openEHR-datatypes](https://github.com/clarotech/openEHR-datat
 ### Notes
 
 - Package ID changed from `OpenEHR.RM.DataTypes` to `Clarotech.OpenEHR.RM.Datatypes` — update
-  your `PackageReference` elements accordingly.
+  your `PackageReference` elements accordingly. The package version restarted at `1.0.0` under
+  the new ID; the previous `OpenEHR.RM.DataTypes` series is superseded.
 
 ---
 
-## 1.0.x
+## Legacy — `OpenEHR.RM.DataTypes` 1.x
 
-> Initial pre-release series — not recommended for production.
+> Pre-rename releases — superseded by `Clarotech.OpenEHR.RM.Datatypes` 1.0.0.
 
 ---
 

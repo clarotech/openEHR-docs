@@ -69,7 +69,13 @@ if (!valid)
 ## 5 — Serialise to JSON
 
 ```csharp
-// TODO: JSON serialisation examples (Clarotech.OpenEHR.RM.Json)
+using Clarotech.OpenEHR.RM.Json;
+
+// Serialise to Canonical JSON (pretty-printed)
+string json = OpenEhrJsonSerializer.Serialize(composition, writeIndented: true);
+
+// Deserialise back
+var restored = OpenEhrJsonSerializer.Deserialize<Composition>(json);
 ```
 
 → See [Round-trip JSON](../integration/round-trip-json.md) for a complete serialise/deserialise example.

@@ -29,7 +29,7 @@ parent-directory/
 cd ..
 git clone https://github.com/clarotech/openEHR-datatypes.git
 git clone https://github.com/clarotech/openEHR-ehr.git
-git clone https://github.com/clarotech/openEHR-json.git   # when public
+git clone https://github.com/clarotech/openEHR-json.git
 ```
 
 ### 2 — Install .NET tools
@@ -44,7 +44,7 @@ dotnet tool restore          # installs DocFX from .config/dotnet-tools.json
 ```bash
 dotnet restore ../openEHR-datatypes/openEHR-datatypes/openEHR-datatypes.csproj
 dotnet restore ../openEHR-ehr/openEHR-ehr/openEHR-ehr.csproj
-# dotnet restore ../openEHR-json/openEHR-json/openEHR-json.csproj
+dotnet restore ../openEHR-json/openEHR-json/openEHR-json.csproj
 ```
 
 ### 4 — Build

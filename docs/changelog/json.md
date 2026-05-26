@@ -9,9 +9,9 @@ Source: [clarotech/openEHR-json](https://github.com/clarotech/openEHR-json)
 
 ---
 
-## Planned for 1.0.0
+## 1.0.0
 
-The library is complete and under pre-release validation. Tracked features:
+> Released 2026-05-25. First stable release.
 
 ### Serialisation
 

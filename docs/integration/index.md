@@ -19,7 +19,7 @@ All guides assume you have installed all three packages:
 ```bash
 dotnet add package Clarotech.OpenEHR.RM.Datatypes
 dotnet add package Clarotech.OpenEHR.RM
-dotnet add package Clarotech.OpenEHR.RM.Json   # once published
+dotnet add package Clarotech.OpenEHR.RM.Json
 ```
 
 And the top-level using directives:
