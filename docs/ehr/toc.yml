@@ -17,3 +17,4 @@
 
 - name: API Reference
   href: ../../api/ehr/toc.yml
+  topicHref: ../../api/ehr/OpenEHR.RM.yml

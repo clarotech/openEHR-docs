@@ -21,3 +21,4 @@
 
 - name: API Reference
   href: ../../api/datatypes/toc.yml
+  topicHref: ../../api/datatypes/OpenEHR.RM.DataTypes.yml

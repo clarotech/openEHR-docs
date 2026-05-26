@@ -13,3 +13,4 @@
 
 - name: API Reference
   href: ../../api/json/toc.yml
+  topicHref: ../../api/json/Clarotech.OpenEHR.RM.Json.yml
