@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Encapsulated Data | openEHR .NET Documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Encapsulated Data | openEHR .NET Documentation ">
+      
+      <meta name="description" content="DvMultimedia and DvParsable for binary and structured text payloads.">
+      <link rel="icon" href="../../../images/favicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo.svg" alt="openEHR .NET">
+            openEHR .NET
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="encapsulated-data">Encapsulated Data</h1>
+
+<p>Namespace: <code>OpenEHR.RM.DataTypes.Encapsulated</code></p>
+<p>Encapsulated types carry payloads that are not directly interpretable by the RM itself —
+either binary content (<code>DvMultimedia</code>) or structured text in an external format (<code>DvParsable</code>).</p>
+<h2 id="dvencapsulated-abstract"><code>DvEncapsulated</code> (abstract)</h2>
+<p>The abstract base for both types. Carries language, charset, and optional size/hash metadata.</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Charset</code></td>
+<td><code>CodePhrase?</code></td>
+<td>IANA character set (e.g. <code>&quot;UTF-8&quot;</code>)</td>
+</tr>
+<tr>
+<td><code>Language</code></td>
+<td><code>CodePhrase?</code></td>
+<td>ISO 639-1 language code</td>
+</tr>
+</tbody>
+</table>
+<h2 id="dvmultimedia"><code>DvMultimedia</code></h2>
+<p>Stores binary content such as DICOM images, PDFs, audio, or video — either inline as a
+<code>byte[]</code> or by reference via a <code>DvUri</code>.</p>
+<pre><code class="lang-csharp">// Inline PNG
+var ecgImage = new DvMultimedia
+{
+    MediaType    = new CodePhrase(new TerminologyId(&quot;IANA_media-types&quot;), &quot;image/png&quot;),
+    Data         = File.ReadAllBytes(&quot;ecg.png&quot;),
+    Size         = new FileInfo(&quot;ecg.png&quot;).Length,
+    IntegrityCheck = ComputeSha256(&quot;ecg.png&quot;),
+    IntegrityCheckAlgorithm = new CodePhrase(
+                                  new TerminologyId(&quot;openehr_integrity_check_algorithms&quot;),
+                                  &quot;SHA-256&quot;)
+};
+
+// By reference (the binary lives elsewhere)
+var ctScan = new DvMultimedia
+{
+    MediaType = new CodePhrase(new TerminologyId(&quot;IANA_media-types&quot;), &quot;application/dicom&quot;),
+    Uri       = new DvUri(&quot;https://pacs.hospital.example/studies/1.2.3.4&quot;)
+};
+</code></pre>
+<blockquote>
+<p><strong>Guidance</strong> — Prefer <code>Uri</code> references for large binaries to avoid inflating composition
+sizes. Store the DICOM in a PACS and reference it.</p>
+</blockquote>
+<h2 id="dvparsable"><code>DvParsable</code></h2>
+<p>Stores structured text content whose internal format is known but is not interpreted by
+the openEHR RM — for example an HL7 v2 message segment, an HTML fragment, or a CDA
+document excerpt.</p>
+<pre><code class="lang-csharp">var hl7Segment = new DvParsable
+{
+    Value       = &quot;OBX|1|NM|8867-4^Heart rate^LN||72|/min|…&quot;,
+    Formalism   = &quot;hl7v2_segment&quot;
+};
+
+var htmlNote = new DvParsable
+{
+    Value     = &quot;&lt;p&gt;Follow-up in &lt;strong&gt;4 weeks&lt;/strong&gt;&lt;/p&gt;&quot;,
+    Formalism = &quot;text/html&quot;
+};
+</code></pre>
+<p>The <code>Formalism</code> property is a free-form string identifying the syntax of the payload.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          © Claro Consulting Ltd. Docs licensed under <a href='https://creativecommons.org/licenses/by/4.0/'>CC-BY 4.0</a>. Libraries licensed under <a href='https://www.apache.org/licenses/LICENSE-2.0'>Apache 2.0</a>.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

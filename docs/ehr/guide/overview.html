@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>EHR RM — Introduction | openEHR .NET Documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="EHR RM — Introduction | openEHR .NET Documentation ">
+      
+      <meta name="description" content="Architecture and design patterns for the OpenEHR.RM namespace.">
+      <link rel="icon" href="../../../images/favicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo.svg" alt="openEHR .NET">
+            openEHR .NET
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="ehr-reference-model--introduction">EHR Reference Model — Introduction</h1>
+
+<p><code>Clarotech.OpenEHR.RM</code> (<code>OpenEHR.RM.*</code>) implements the structural backbone of an openEHR
+record store. It depends on <code>Clarotech.OpenEHR.RM.Datatypes</code> for all leaf data values.</p>
+<h2 id="design-patterns">Design patterns</h2>
+<h3 id="locatable--the-identity-backbone"><code>Locatable</code> — the identity backbone</h3>
+<p>Almost every class in the RM inherits from <code>Locatable</code>, which provides:</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Name</code></td>
+<td><code>DvText</code></td>
+<td>Human-readable name (mandatory)</td>
+</tr>
+<tr>
+<td><code>ArchetypeNodeId</code></td>
+<td><code>string</code></td>
+<td><code>at0001</code>-style node ID from the constraining archetype</td>
+</tr>
+<tr>
+<td><code>Uid</code></td>
+<td><code>UidBasedId?</code></td>
+<td>Optional local unique ID</td>
+</tr>
+<tr>
+<td><code>ArchetypeDetails</code></td>
+<td><code>Archetyped?</code></td>
+<td>Archetype + template binding</td>
+</tr>
+<tr>
+<td><code>Links</code></td>
+<td><code>ISet&lt;Link&gt;?</code></td>
+<td>Cross-references to other objects</td>
+</tr>
+</tbody>
+</table>
+<h3 id="pathable--aql-path-navigation"><code>Pathable</code> — AQL path navigation</h3>
+<p><code>Pathable</code> (base of <code>Locatable</code>) allows objects to be addressed using AQL-style paths
+such as <code>/data[at0001]/items[at0002]/value</code>.</p>
+<h3 id="init-only-properties"><code>init</code>-only properties</h3>
+<p>All RM classes use C# <code>init</code>-only properties. Construct with object-initialiser syntax
+and treat instances as effectively immutable after construction:</p>
+<pre><code class="lang-csharp">var section = new Section
+{
+    Name           = new DvText(&quot;History&quot;),
+    ArchetypeNodeId = &quot;at0001&quot;,
+    Items          = new List&lt;ContentItem&gt; { /* entries */ }
+};
+</code></pre>
+<h2 id="package-layout">Package layout</h2>
+<table>
+<thead>
+<tr>
+<th>Package</th>
+<th>Guide page</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>EHR, versioning, contribution</td>
+<td><a href="ehr.html">EHR &amp; Versioning</a></td>
+</tr>
+<tr>
+<td>Composition, sections, entries</td>
+<td><a href="composition.html">Composition</a></td>
+</tr>
+<tr>
+<td>Common — audit, party, links</td>
+<td><a href="common.html">Common</a></td>
+</tr>
+<tr>
+<td>Data structures — tree, list</td>
+<td><a href="data-structures.html">Data Structures</a></td>
+</tr>
+</tbody>
+</table>
+
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          © Claro Consulting Ltd. Docs licensed under <a href='https://creativecommons.org/licenses/by/4.0/'>CC-BY 4.0</a>. Libraries licensed under <a href='https://www.apache.org/licenses/LICENSE-2.0'>Apache 2.0</a>.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

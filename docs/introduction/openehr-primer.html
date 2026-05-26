@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>openEHR Primer | openEHR .NET Documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="openEHR Primer | openEHR .NET Documentation ">
+      
+      <meta name="description" content="A short crash course in openEHR concepts for .NET developers.">
+      <link rel="icon" href="../../images/favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/logo.svg" alt="openEHR .NET">
+            openEHR .NET
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="openehr-primer">openEHR Primer</h1>
+
+<p>This page gives .NET developers enough openEHR background to use these libraries productively.
+For the full specification see the <a href="https://www.openehr.org/">openEHR Foundation website</a>.</p>
+<h2 id="the-information-hierarchy">The Information Hierarchy</h2>
+<pre><code>EHR
+└── EhrStatus          (one per EHR — demographic info, consent flags)
+└── EhrAccess          (access-control metadata)
+└── Contribution       (versioned change-set, like a git commit)
+    └── Version&lt;T&gt;
+        └── Composition      ← the main clinical document
+            ├── Section      (structural grouping, like a folder)
+            │   └── Entry    (the atomic clinical statement)
+            │       └── Element  (a single data point, e.g. a measurement)
+            └── …
+</code></pre>
+<p>A <strong>Composition</strong> is the top-level clinical document — roughly equivalent to a
+clinical note, a discharge summary, or a vital-signs observation set.</p>
+<h2 id="entries">Entries</h2>
+<p>Entries are the four archetypable clinical statement types:</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Class</th>
+<th>Used for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Observation</td>
+<td><code>Observation</code></td>
+<td>Measurements, findings (e.g. blood pressure)</td>
+</tr>
+<tr>
+<td>Evaluation</td>
+<td><code>Evaluation</code></td>
+<td>Assessments, diagnoses, risk evaluations</td>
+</tr>
+<tr>
+<td>Instruction</td>
+<td><code>Instruction</code></td>
+<td>Orders, prescriptions, care plans</td>
+</tr>
+<tr>
+<td>Action</td>
+<td><code>Action</code></td>
+<td>Performed procedures, medication administrations</td>
+</tr>
+</tbody>
+</table>
+<p>Each entry contains a <strong>data</strong> <code>ItemTree</code> or <code>ItemList</code> of <code>Element</code> items, each of which
+holds a single <code>DvXxx</code> data-type value.</p>
+<h2 id="data-types">Data Types</h2>
+<p>All leaf data in openEHR flows through the <code>DATA_VALUE</code> hierarchy:</p>
+<table>
+<thead>
+<tr>
+<th>openEHR type</th>
+<th>C# class</th>
+<th>Example value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DV_TEXT</code></td>
+<td><code>DvText</code></td>
+<td><code>&quot;Chief complaint&quot;</code></td>
+</tr>
+<tr>
+<td><code>DV_CODED_TEXT</code></td>
+<td><code>DvCodedText</code></td>
+<td>SNOMED CT 22253000 (pain)</td>
+</tr>
+<tr>
+<td><code>DV_QUANTITY</code></td>
+<td><code>DvQuantity</code></td>
+<td>98.6 °F</td>
+</tr>
+<tr>
+<td><code>DV_COUNT</code></td>
+<td><code>DvCount</code></td>
+<td>3 episodes</td>
+</tr>
+<tr>
+<td><code>DV_PROPORTION</code></td>
+<td><code>DvProportion</code></td>
+<td>75 %</td>
+</tr>
+<tr>
+<td><code>DV_DATE_TIME</code></td>
+<td><code>DvDateTime</code></td>
+<td>2025-05-24T09:00:00+01:00</td>
+</tr>
+<tr>
+<td><code>DV_DURATION</code></td>
+<td><code>DvDuration</code></td>
+<td>P1Y2M (1 year, 2 months)</td>
+</tr>
+<tr>
+<td><code>DV_URI</code></td>
+<td><code>DvUri</code></td>
+<td><code>https://example.com/obs/123</code></td>
+</tr>
+<tr>
+<td><code>DV_EHR_URI</code></td>
+<td><code>DvEhrUri</code></td>
+<td><code>ehr://…</code></td>
+</tr>
+<tr>
+<td><code>DV_MULTIMEDIA</code></td>
+<td><code>DvMultimedia</code></td>
+<td>PDF, DICOM, PNG</td>
+</tr>
+<tr>
+<td><code>DV_PARSABLE</code></td>
+<td><code>DvParsable</code></td>
+<td>HL7 v2 segment, CDA fragment</td>
+</tr>
+</tbody>
+</table>
+<h2 id="terminology-and-coded-text">Terminology and Coded Text</h2>
+<p>A <code>DvCodedText</code> pairs a human-readable string with a <code>CodePhrase</code>:</p>
+<pre><code>DvCodedText
+  ├── value       &quot;Chest pain&quot;
+  └── defining_code
+        CodePhrase
+          ├── terminology_id  TerminologyId(&quot;SNOMED-CT&quot;)
+          └── code_string     &quot;29857009&quot;
+</code></pre>
+<p>The terminology identifier uses openEHR-defined names: <code>&quot;SNOMED-CT&quot;</code>, <code>&quot;LOINC&quot;</code>,
+<code>&quot;ICD10&quot;</code>, <code>&quot;ISO_639-1&quot;</code> (language codes), <code>&quot;openehr&quot;</code> (RM-internal codes), etc.</p>
+<h2 id="versioning">Versioning</h2>
+<p>openEHR uses <code>OBJECT_VERSION_ID</code> strings of the form:</p>
+<pre><code>&lt;object_id&gt;::&lt;creating_system_id&gt;::&lt;version_tree_id&gt;
+</code></pre>
+<p>e.g. <code>&quot;a1b2c3d4-…::hospital.example.com::1&quot;</code>.</p>
+<p>The <code>Version&lt;T&gt;</code> wrapper carries lifecycle metadata (lifecycle_state, commit_audit, contribution)
+around any versionable object (Composition, EhrStatus, Folder).</p>
+<h2 id="archetypes-and-templates-out-of-scope">Archetypes and Templates (out of scope)</h2>
+<p>These libraries implement the <strong>Reference Model</strong> layer only. Archetype-level constraints
+(openEHR Archetype Definition Language / ADL 2, operational templates / OPT2, and AQL querying)
+are handled by separate tooling and are not part of these NuGet packages.</p>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li><a href="https://specifications.openehr.org/releases/RM/Release-1.1.0">openEHR RM specification</a></li>
+<li><a href="https://specifications.openehr.org/releases/BASE/latest/architecture_overview.html">openEHR Architecture Overview</a></li>
+<li><a href="https://tools.openehr.org/designer/">Archetype Designer</a> — browse existing archetypes</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          © Claro Consulting Ltd. Docs licensed under <a href='https://creativecommons.org/licenses/by/4.0/'>CC-BY 4.0</a>. Libraries licensed under <a href='https://www.apache.org/licenses/LICENSE-2.0'>Apache 2.0</a>.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

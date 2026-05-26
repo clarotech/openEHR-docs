@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Namespace OpenEHR.RM.Ehr | openEHR .NET Documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Namespace OpenEHR.RM.Ehr | openEHR .NET Documentation ">
+      
+      
+      <link rel="icon" href="../../images/favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/logo.svg" alt="openEHR .NET">
+            openEHR .NET
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="OpenEHR.RM.Ehr">
+
+  <h1 id="OpenEHR_RM_Ehr" data-uid="OpenEHR.RM.Ehr" class="text-break">Namespace OpenEHR.RM.Ehr</h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="markdown level0 remarks"></div>
+
+    <h3 id="classes">
+Classes
+</h3>
+    <dl class="jumplist">
+      <dt><a class="xref" href="OpenEHR.RM.Ehr.AccessControlSettings.html">AccessControlSettings</a></dt>
+      <dd><p>Abstract class defining the concept of access control settings for an EHR.
+Concrete subtypes are defined by EHR system vendors.
+Corresponds to ACCESS_CONTROL_SETTINGS in openEHR RM 1.1.0 ehr.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="OpenEHR.RM.Ehr.Ehr.html">Ehr</a></dt>
+      <dd><p>The EHR object is the root object and access point of an EHR for a subject of care.
+Corresponds to EHR in openEHR RM 1.1.0 ehr.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="OpenEHR.RM.Ehr.EhrAccess.html">EhrAccess</a></dt>
+      <dd><p>EHR-wide access control record.
+The <a class="xref" href="OpenEHR.RM.Ehr.EhrAccess.Settings.html#OpenEHR_RM_Ehr_EhrAccess_Settings">Settings</a> object is vendor-defined; this class provides the
+structural wrapper and the <a class="xref" href="OpenEHR.RM.Ehr.EhrAccess.Scheme.html#OpenEHR_RM_Ehr_EhrAccess_Scheme">Scheme</a> derived function.
+Corresponds to EHR_ACCESS in openEHR RM 1.1.0 ehr.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="OpenEHR.RM.Ehr.EhrStatus.html">EhrStatus</a></dt>
+      <dd><p>Single object per EHR, containing key summary status information about the EHR as a whole.
+Corresponds to EHR_STATUS in openEHR RM 1.1.0 ehr.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="OpenEHR.RM.Ehr.VersionedComposition.html">VersionedComposition</a></dt>
+      <dd><p>Versioned container for COMPOSITION instances.
+Corresponds to VERSIONED_COMPOSITION in openEHR RM 1.1.0 ehr.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="OpenEHR.RM.Ehr.VersionedEhrAccess.html">VersionedEhrAccess</a></dt>
+      <dd><p>Versioned container for EHR_ACCESS instances.
+Corresponds to VERSIONED_EHR_ACCESS in openEHR RM 1.1.0 ehr.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="OpenEHR.RM.Ehr.VersionedEhrStatus.html">VersionedEhrStatus</a></dt>
+      <dd><p>Versioned container for EHR_STATUS instances.
+Corresponds to VERSIONED_EHR_STATUS in openEHR RM 1.1.0 ehr.</p>
+</dd>
+    </dl>
+
+
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          © Claro Consulting Ltd. Docs licensed under <a href='https://creativecommons.org/licenses/by/4.0/'>CC-BY 4.0</a>. Libraries licensed under <a href='https://www.apache.org/licenses/LICENSE-2.0'>Apache 2.0</a>.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

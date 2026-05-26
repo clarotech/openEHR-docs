@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Round-Trip JSON | openEHR .NET Documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Round-Trip JSON | openEHR .NET Documentation ">
+      
+      <meta name="description" content="Serialise a Composition to Canonical JSON and deserialise it back.">
+      <link rel="icon" href="../../images/favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/logo.svg" alt="openEHR .NET">
+            openEHR .NET
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="round-trip-json">Round-Trip JSON</h1>
+
+<p>This guide demonstrates a full serialise → deserialise round-trip using
+<code>Clarotech.OpenEHR.RM.Json</code>. It continues from the
+<a href="building-a-composition.html">Building a Composition</a> guide.</p>
+<h2 id="setup">Setup</h2>
+<pre><code class="lang-bash">dotnet add package Clarotech.OpenEHR.RM.Json
+</code></pre>
+<pre><code class="lang-csharp">using Clarotech.OpenEHR.RM.Json;
+</code></pre>
+<h2 id="1--serialise-to-canonical-json">1 — Serialise to Canonical JSON</h2>
+<pre><code class="lang-csharp">// Assume `composition` was built as shown in the Building a Composition guide.
+
+// Compact JSON (for storage/transport)
+string json = OpenEhrJsonSerializer.Serialize(composition);
+
+// Pretty-printed (for debugging / display)
+string pretty = OpenEhrJsonSerializer.Serialize(composition, writeIndented: true);
+
+Console.WriteLine(pretty);
+</code></pre>
+<p>Abbreviated output:</p>
+<pre><code class="lang-json">{
+  &quot;_type&quot;: &quot;COMPOSITION&quot;,
+  &quot;name&quot;: { &quot;_type&quot;: &quot;DV_TEXT&quot;, &quot;value&quot;: &quot;Vital Signs&quot; },
+  &quot;archetype_node_id&quot;: &quot;openEHR-EHR-COMPOSITION.encounter.v1&quot;,
+  &quot;language&quot;: {
+    &quot;_type&quot;: &quot;CODE_PHRASE&quot;,
+    &quot;terminology_id&quot;: { &quot;_type&quot;: &quot;TERMINOLOGY_ID&quot;, &quot;value&quot;: &quot;ISO_639-1&quot; },
+    &quot;code_string&quot;: &quot;en&quot;
+  },
+  &quot;territory&quot;: {
+    &quot;_type&quot;: &quot;CODE_PHRASE&quot;,
+    &quot;terminology_id&quot;: { &quot;_type&quot;: &quot;TERMINOLOGY_ID&quot;, &quot;value&quot;: &quot;ISO_3166-1&quot; },
+    &quot;code_string&quot;: &quot;GB&quot;
+  },
+  &quot;category&quot;: {
+    &quot;_type&quot;: &quot;DV_CODED_TEXT&quot;,
+    &quot;value&quot;: &quot;event&quot;,
+    &quot;defining_code&quot;: {
+      &quot;_type&quot;: &quot;CODE_PHRASE&quot;,
+      &quot;terminology_id&quot;: { &quot;_type&quot;: &quot;TERMINOLOGY_ID&quot;, &quot;value&quot;: &quot;openehr&quot; },
+      &quot;code_string&quot;: &quot;433&quot;
+    }
+  },
+  &quot;composer&quot;: { &quot;_type&quot;: &quot;PARTY_IDENTIFIED&quot;, &quot;name&quot;: &quot;Dr Alice Smith&quot; },
+  &quot;content&quot;: [
+    {
+      &quot;_type&quot;: &quot;OBSERVATION&quot;,
+      &quot;name&quot;: { &quot;_type&quot;: &quot;DV_TEXT&quot;, &quot;value&quot;: &quot;Blood Pressure&quot; },
+      &quot;archetype_node_id&quot;: &quot;openEHR-EHR-OBSERVATION.blood_pressure.v2&quot;,
+      &quot;data&quot;: {
+        &quot;_type&quot;: &quot;HISTORY&quot;,
+        &quot;events&quot;: [
+          {
+            &quot;_type&quot;: &quot;POINT_EVENT&quot;,
+            &quot;time&quot;: { &quot;_type&quot;: &quot;DV_DATE_TIME&quot;, &quot;value&quot;: &quot;2025-05-25T09:15:00+01:00&quot; },
+            &quot;data&quot;: {
+              &quot;_type&quot;: &quot;ITEM_TREE&quot;,
+              &quot;items&quot;: [
+                {
+                  &quot;_type&quot;: &quot;ELEMENT&quot;,
+                  &quot;name&quot;: { &quot;_type&quot;: &quot;DV_TEXT&quot;, &quot;value&quot;: &quot;Systolic&quot; },
+                  &quot;value&quot;: { &quot;_type&quot;: &quot;DV_QUANTITY&quot;, &quot;magnitude&quot;: 120.0, &quot;units&quot;: &quot;mm[Hg]&quot; }
+                },
+                {
+                  &quot;_type&quot;: &quot;ELEMENT&quot;,
+                  &quot;name&quot;: { &quot;_type&quot;: &quot;DV_TEXT&quot;, &quot;value&quot;: &quot;Diastolic&quot; },
+                  &quot;value&quot;: { &quot;_type&quot;: &quot;DV_QUANTITY&quot;, &quot;magnitude&quot;: 80.0, &quot;units&quot;: &quot;mm[Hg]&quot; }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
+</code></pre>
+<h2 id="2--deserialise-back">2 — Deserialise back</h2>
+<pre><code class="lang-csharp">var restored = OpenEhrJsonSerializer.Deserialize&lt;Composition&gt;(json);
+
+// Verify round-trip fidelity
+Debug.Assert(restored!.Name.Value == composition.Name.Value);
+
+// Access typed values — _type drives concrete type resolution
+var obs = (Observation)restored.Content[0];
+var tree = (ItemTree)obs.Data.Events[0].Data;
+var systolic = (DvQuantity)((Element)tree.Items[0]).Value!;
+Console.WriteLine($&quot;Systolic: {systolic.Magnitude} {systolic.Units}&quot;); // 120 mm[Hg]
+</code></pre>
+<h2 id="3--save-to-and-read-from-a-file">3 — Save to and read from a file</h2>
+<pre><code class="lang-csharp">// Write
+await File.WriteAllTextAsync(&quot;vital-signs.json&quot;, json, Encoding.UTF8);
+
+// Read back
+string stored = await File.ReadAllTextAsync(&quot;vital-signs.json&quot;);
+var fromFile  = OpenEhrJsonSerializer.Deserialize&lt;Composition&gt;(stored);
+</code></pre>
+<h2 id="4--async-stream-round-trip-http-post--get">4 — Async stream round-trip (HTTP POST → GET)</h2>
+<pre><code class="lang-csharp">using var client = new HttpClient { BaseAddress = new Uri(&quot;https://cdr.hospital.example/ehrbase/&quot;) };
+
+// POST a new composition
+var postContent = new StringContent(json, Encoding.UTF8, &quot;application/json&quot;);
+var postResponse = await client.PostAsync(
+    $&quot;rest/openehr/v1/ehr/{ehrId}/composition&quot;, postContent);
+postResponse.EnsureSuccessStatusCode();
+
+// GET it back and deserialise from the response stream
+var getResponse = await client.GetAsync(
+    $&quot;rest/openehr/v1/ehr/{ehrId}/composition/{compositionVersionId}&quot;);
+getResponse.EnsureSuccessStatusCode();
+
+await using var body = await getResponse.Content.ReadAsStreamAsync();
+var cdrComposition = await OpenEhrJsonSerializer.DeserializeAsync&lt;Composition&gt;(body);
+</code></pre>
+<h2 id="5--wrapping-in-a-versioncomposition">5 — Wrapping in a <code>Version&lt;Composition&gt;</code></h2>
+<p>When submitting to a CDR that expects versioned payloads:</p>
+<pre><code class="lang-csharp">string versionJson = OpenEhrJsonSerializer.Serialize(version, writeIndented: true);
+
+// Deserialise a versioned response
+var restoredVersion = OpenEhrJsonSerializer.Deserialize&lt;OriginalVersion&lt;Composition&gt;&gt;(versionJson);
+var innerComposition = restoredVersion!.Data;
+</code></pre>
+<h2 id="see-also">See also</h2>
+<ul>
+<li><a href="../json/guide/serialization.html">Serialisation</a></li>
+<li><a href="../json/guide/deserialization.html">Deserialisation</a></li>
+<li><a href="building-a-composition.html">Building a Composition</a></li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          © Claro Consulting Ltd. Docs licensed under <a href='https://creativecommons.org/licenses/by/4.0/'>CC-BY 4.0</a>. Libraries licensed under <a href='https://www.apache.org/licenses/LICENSE-2.0'>Apache 2.0</a>.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

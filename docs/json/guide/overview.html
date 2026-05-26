@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>JSON — Introduction | openEHR .NET Documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="JSON — Introduction | openEHR .NET Documentation ">
+      
+      <meta name="description" content="Architecture and design of the Clarotech.OpenEHR.RM.Json serialisation library.">
+      <link rel="icon" href="../../../images/favicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo.svg" alt="openEHR .NET">
+            openEHR .NET
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="json-serialisation--introduction">JSON Serialisation — Introduction</h1>
+
+<h2 id="openehr-canonical-json">openEHR Canonical JSON</h2>
+<p>The <a href="https://specifications.openehr.org/releases/ITS-REST/latest">openEHR REST API Specification</a>
+defines a <strong>Canonical JSON</strong> encoding for all RM objects. <code>Clarotech.OpenEHR.RM.Json</code>
+implements this encoding faithfully. The key rules are:</p>
+<ul>
+<li><strong><code>_type</code> discriminator</strong> — every serialised RM object carries a <code>&quot;_type&quot;</code> field with the
+openEHR RM type name (e.g. <code>&quot;DV_QUANTITY&quot;</code>, <code>&quot;COMPOSITION&quot;</code>, <code>&quot;OBSERVATION&quot;</code>).
+This is written as the <strong>first</strong> property of each JSON object so consumers can resolve the
+concrete type before reading remaining fields.</li>
+<li><strong><code>snake_case</code> property names</strong> — all property names are <code>snake_case</code> (e.g. <code>archetype_node_id</code>,
+<code>defining_code</code>). This is enforced via <code>JsonNamingPolicy.SnakeCaseLower</code>.</li>
+<li><strong>Null omission</strong> — properties with <code>null</code> values are omitted entirely from the output
+(<code>DefaultIgnoreCondition = WhenWritingNull</code>).</li>
+<li><strong>Case-insensitive deserialisation</strong> — the deserialiser accepts both <code>snake_case</code> and
+<code>camelCase</code> property names, making it tolerant of minor format variations from third-party
+openEHR CDRs.</li>
+</ul>
+<h2 id="the-two-public-types">The two public types</h2>
+<h3 id="openehrjsonserializer"><code>OpenEhrJsonSerializer</code></h3>
+<p>The static entry point for all serialisation and deserialisation. Three method groups:</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Serialize&lt;T&gt;(T, bool)</code></td>
+<td>Serialise using the <strong>declared</strong> type <code>T</code></td>
+</tr>
+<tr>
+<td><code>SerializeByRuntimeType(object, bool)</code></td>
+<td>Serialise using the <strong>runtime</strong> type — use this when the declared type is abstract (e.g. <code>DataValue</code>) to ensure the correct <code>_type</code> is emitted</td>
+</tr>
+<tr>
+<td><code>Deserialize&lt;T&gt;(string)</code></td>
+<td>Deserialise from a JSON string</td>
+</tr>
+<tr>
+<td><code>Deserialize&lt;T&gt;(Stream)</code></td>
+<td>Deserialise from a UTF-8 byte stream</td>
+</tr>
+<tr>
+<td><code>DeserializeAsync&lt;T&gt;(Stream, CancellationToken)</code></td>
+<td>Async stream deserialisation</td>
+</tr>
+</tbody>
+</table>
+<h3 id="openehrjsonoptions"><code>OpenEhrJsonOptions</code></h3>
+<pre><code class="lang-csharp">JsonSerializerOptions opts = OpenEhrJsonOptions.Default;
+</code></pre>
+<p><code>OpenEhrJsonOptions.Default</code> is a thread-safe, shared <code>JsonSerializerOptions</code> instance
+pre-loaded with converters for every type in the RM hierarchy. You can layer additional
+converters on top:</p>
+<pre><code class="lang-csharp">var custom = new JsonSerializerOptions(OpenEhrJsonOptions.Default);
+custom.Converters.Add(new MyCustomConverter());
+string json = JsonSerializer.Serialize(value, custom);
+</code></pre>
+<h2 id="converter-architecture">Converter architecture</h2>
+<p>Converters are organised to mirror the RM package structure:</p>
+<pre><code>Converters/
+├── DataValueConverter.cs        — polymorphic root; reads &quot;_type&quot; to dispatch
+├── DataTypes/                   — DvText, DvCodedText, DvQuantity, DvCount,
+│                                  DvProportion, DvOrdinal, DvBoolean,
+│                                  DvDateTime/Date/Time/Duration,
+│                                  DvIdentifier, DvUri, DvEhrUri,
+│                                  DvMultimedia, DvParsable
+├── Common/                      — PartyProxy (→ Identified/Self/Related),
+│                                  AuditDetails, Attestation, Link,
+│                                  FeederAudit, RevisionHistory
+├── DataStructures/              — ItemStructure, History&lt;T&gt;, Event&lt;T&gt;,
+│                                  ItemTree/List/Table/Single, Cluster, Element
+├── Composition/                 — Composition, Section, ContentItem,
+│                                  Observation, Evaluation, Instruction,
+│                                  Action, AdminEntry, EventContext
+├── ChangeControl/               — Version&lt;T&gt;, OriginalVersion&lt;T&gt;,
+│                                  ImportedVersion&lt;T&gt;, Contribution
+├── Ehr/                         — Ehr, EhrStatus, EhrAccess,
+│                                  VersionedComposition, VersionedEhrStatus
+└── Support/                     — UidBasedId, ObjectId, ObjectRef
+</code></pre>
+<h2 id="trim--aot-note">Trim / AOT note</h2>
+<p>All converters use reflection and are annotated with <code>[RequiresUnreferencedCode]</code>.
+The library is <strong>not safe</strong> for use with <code>PublishTrimmed=true</code> or Native AOT publishing
+without a custom source-generated serialiser context. If you need AOT support, open an
+issue on <a href="https://github.com/clarotech/openEHR-json">clarotech/openEHR-json</a>.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          © Claro Consulting Ltd. Docs licensed under <a href='https://creativecommons.org/licenses/by/4.0/'>CC-BY 4.0</a>. Libraries licensed under <a href='https://www.apache.org/licenses/LICENSE-2.0'>Apache 2.0</a>.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

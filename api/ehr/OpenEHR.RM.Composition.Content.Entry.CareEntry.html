@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class CareEntry | openEHR .NET Documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class CareEntry | openEHR .NET Documentation ">
+      
+      <meta name="description" content="Abstract parent of all clinical (care-related) entries. Corresponds to CARE_ENTRY in openEHR RM 1.1.0 composition.content.entry.">
+      <link rel="icon" href="../../images/favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/logo.svg" alt="openEHR .NET">
+            openEHR .NET
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="OpenEHR.RM.Composition.Content.Entry.CareEntry">
+
+
+
+  <h1 id="OpenEHR_RM_Composition_Content_Entry_CareEntry" data-uid="OpenEHR.RM.Composition.Content.Entry.CareEntry" class="text-break">
+Class CareEntry  <a class="header-action link-secondary" title="View source" href="https://github.com/clarotech/openEHR-ehr/blob/main/openEHR-ehr/Composition/Content/Entry/CareEntry.cs/#L7"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="OpenEHR.html">OpenEHR</a>.<a class="xref" href="OpenEHR.RM.html">RM</a>.<a class="xref" href="OpenEHR.RM.Composition.html">Composition</a>.<a class="xref" href="OpenEHR.RM.Composition.Content.html">Content</a>.<a class="xref" href="OpenEHR.RM.Composition.Content.Entry.html">Entry</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>openEHR-ehr.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Abstract parent of all clinical (care-related) entries.
+Corresponds to CARE_ENTRY in openEHR RM 1.1.0 composition.content.entry.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract class CareEntry : Entry, IValidatableObject</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><a class="xref" href="OpenEHR.RM.Common.Archetyped.Pathable.html">Pathable</a></div>
+      <div><a class="xref" href="OpenEHR.RM.Common.Archetyped.Locatable.html">Locatable</a></div>
+      <div><a class="xref" href="OpenEHR.RM.Composition.Content.ContentItem.html">ContentItem</a></div>
+      <div><a class="xref" href="OpenEHR.RM.Composition.Content.Entry.Entry.html">Entry</a></div>
+      <div><span class="xref">CareEntry</span></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.componentmodel.dataannotations.ivalidatableobject">IValidatableObject</a></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist derived">
+    <dt>Derived</dt>
+    <dd>
+      <div><a class="xref" href="OpenEHR.RM.Composition.Content.Entry.Action.html">Action</a></div>
+      <div><a class="xref" href="OpenEHR.RM.Composition.Content.Entry.Evaluation.html">Evaluation</a></div>
+      <div><a class="xref" href="OpenEHR.RM.Composition.Content.Entry.Instruction.html">Instruction</a></div>
+      <div><a class="xref" href="OpenEHR.RM.Composition.Content.Entry.Observation.html">Observation</a></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="OpenEHR.RM.Composition.Content.Entry.Entry.Language.html#OpenEHR_RM_Composition_Content_Entry_Entry_Language">Entry.Language</a>
+    </div>
+    <div>
+      <a class="xref" href="OpenEHR.RM.Composition.Content.Entry.Entry.Encoding.html#OpenEHR_RM_Composition_Content_Entry_Entry_Encoding">Entry.Encoding</a>
+    </div>
+    <div>
+      <a class="xref" href="OpenEHR.RM.Composition.Content.Entry.Entry.Subject.html#OpenEHR_RM_Composition_Content_Entry_Entry_Subject">Entry.Subject</a>
+    </div>
+    <div>
+      <a class="xref" href="OpenEHR.RM.Composition.Content.Entry.Entry.Provider.html#OpenEHR_RM_Composition_Content_Entry_Entry_Provider">Entry.Provider</a>
+    </div>
+    <div>
+      <a class="xref" href="OpenEHR.RM.Composition.Content.Entry.Entry.OtherParticipations.html#OpenEHR_RM_Composition_Content_Entry_Entry_OtherParticipations">Entry.OtherParticipations</a>
+    </div>
+    <div>
+      <a class="xref" href="OpenEHR.RM.Composition.Content.Entry.Entry.Protocol.html#OpenEHR_RM_Composition_Content_Entry_Entry_Protocol">Entry.Protocol</a>
+    </div>
+    <div>
+      <a class="xref" href="OpenEHR.RM.Composition.Content.Entry.Entry.GuidelineId.html#OpenEHR_RM_Composition_Content_Entry_Entry_GuidelineId">Entry.GuidelineId</a>
+    </div>
+    <div>
+      <a class="xref" href="OpenEHR.RM.Composition.Content.Entry.Entry.Validate.html#OpenEHR_RM_Composition_Content_Entry_Entry_Validate_System_ComponentModel_DataAnnotations_ValidationContext_">Entry.Validate(ValidationContext)</a>
+    </div>
+    <div>
+      <a class="xref" href="OpenEHR.RM.Common.Archetyped.Locatable.Name.html#OpenEHR_RM_Common_Archetyped_Locatable_Name">Locatable.Name</a>
+    </div>
+    <div>
+      <a class="xref" href="OpenEHR.RM.Common.Archetyped.Locatable.ArchetypeNodeId.html#OpenEHR_RM_Common_Archetyped_Locatable_ArchetypeNodeId">Locatable.ArchetypeNodeId</a>
+    </div>
+    <div>
+      <a class="xref" href="OpenEHR.RM.Common.Archetyped.Locatable.Uid.html#OpenEHR_RM_Common_Archetyped_Locatable_Uid">Locatable.Uid</a>
+    </div>
+    <div>
+      <a class="xref" href="OpenEHR.RM.Common.Archetyped.Locatable.Links.html#OpenEHR_RM_Common_Archetyped_Locatable_Links">Locatable.Links</a>
+    </div>
+    <div>
+      <a class="xref" href="OpenEHR.RM.Common.Archetyped.Locatable.ArchetypeDetails.html#OpenEHR_RM_Common_Archetyped_Locatable_ArchetypeDetails">Locatable.ArchetypeDetails</a>
+    </div>
+    <div>
+      <a class="xref" href="OpenEHR.RM.Common.Archetyped.Locatable.FeederAudit.html#OpenEHR_RM_Common_Archetyped_Locatable_FeederAudit">Locatable.FeederAudit</a>
+    </div>
+    <div>
+      <a class="xref" href="OpenEHR.RM.Common.Archetyped.Locatable.Concept.html#OpenEHR_RM_Common_Archetyped_Locatable_Concept">Locatable.Concept</a>
+    </div>
+    <div>
+      <a class="xref" href="OpenEHR.RM.Common.Archetyped.Locatable.IsArchetypeRoot.html#OpenEHR_RM_Common_Archetyped_Locatable_IsArchetypeRoot">Locatable.IsArchetypeRoot</a>
+    </div>
+    <div>
+      <a class="xref" href="OpenEHR.RM.Common.Archetyped.Pathable.Parent.html#OpenEHR_RM_Common_Archetyped_Pathable_Parent">Pathable.Parent</a>
+    </div>
+    <div>
+      <a class="xref" href="OpenEHR.RM.Common.Archetyped.Pathable.ItemAtPath.html#OpenEHR_RM_Common_Archetyped_Pathable_ItemAtPath_System_String_">Pathable.ItemAtPath(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="OpenEHR.RM.Common.Archetyped.Pathable.ItemsAtPath.html#OpenEHR_RM_Common_Archetyped_Pathable_ItemsAtPath_System_String_">Pathable.ItemsAtPath(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="OpenEHR.RM.Common.Archetyped.Pathable.PathExists.html#OpenEHR_RM_Common_Archetyped_Pathable_PathExists_System_String_">Pathable.PathExists(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="OpenEHR.RM.Common.Archetyped.Pathable.PathUnique.html#OpenEHR_RM_Common_Archetyped_Pathable_PathUnique_System_String_">Pathable.PathUnique(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="OpenEHR.RM.Common.Archetyped.Pathable.PathOfItem.html#OpenEHR_RM_Common_Archetyped_Pathable_PathOfItem_OpenEHR_RM_Common_Archetyped_Pathable_">Pathable.PathOfItem(Pathable)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/clarotech/openEHR-ehr/blob/main/openEHR-ehr/Composition/Content/Entry/CareEntry.cs/#L7" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          © Claro Consulting Ltd. Docs licensed under <a href='https://creativecommons.org/licenses/by/4.0/'>CC-BY 4.0</a>. Libraries licensed under <a href='https://www.apache.org/licenses/LICENSE-2.0'>Apache 2.0</a>.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

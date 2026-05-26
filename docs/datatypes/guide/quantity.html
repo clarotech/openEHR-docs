@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Quantity Types | openEHR .NET Documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Quantity Types | openEHR .NET Documentation ">
+      
+      <meta name="description" content="DvQuantity, DvCount, DvProportion, DvOrdinal, and the ordered/quantifiable hierarchy.">
+      <link rel="icon" href="../../../images/favicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo.svg" alt="openEHR .NET">
+            openEHR .NET
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="quantity-types">Quantity Types</h1>
+
+<p>Namespace: <code>OpenEHR.RM.DataTypes.Quantity</code></p>
+<h2 id="ordered-hierarchy">Ordered hierarchy</h2>
+<pre><code>DvOrdered&lt;T&gt;
+├── DvOrdinal            — ranked items (e.g. pain scale 0–10)
+└── DvQuantifiable&lt;T&gt;
+    ├── DvAmount&lt;T&gt;
+    │   ├── DvQuantity   — physical measurement with UCUM units
+    │   ├── DvCount      — dimensionless integer count
+    │   ├── DvDuration   — ISO 8601 duration (P1Y2M3DT4H…)
+    │   └── DvProportion — ratio / fraction / percentage
+    └── DvTemporal&lt;T&gt;    — (see Date &amp; Time guide)
+</code></pre>
+<h2 id="dvquantity"><code>DvQuantity</code></h2>
+<p>The workhorse type for physical measurements. Units are expressed using
+<a href="https://ucum.org/">UCUM</a> notation.</p>
+<pre><code class="lang-csharp">// Heart rate
+var hr = new DvQuantity { Magnitude = 72,   Units = &quot;/min&quot; };
+
+// Temperature (Fahrenheit)
+var temp = new DvQuantity { Magnitude = 98.6, Units = &quot;[degF]&quot;, Precision = 1 };
+
+// Blood pressure systolic
+var bp = new DvQuantity { Magnitude = 120, Units = &quot;mm[Hg]&quot; };
+</code></pre>
+<p>Key properties:</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Magnitude</code></td>
+<td><code>double</code></td>
+<td>The numeric value</td>
+</tr>
+<tr>
+<td><code>Units</code></td>
+<td><code>string</code></td>
+<td>UCUM unit code</td>
+</tr>
+<tr>
+<td><code>Precision</code></td>
+<td><code>int?</code></td>
+<td>Decimal places; <code>-1</code> = unconstrained</td>
+</tr>
+<tr>
+<td><code>MagnitudeStatus</code></td>
+<td><code>string?</code></td>
+<td><code>&quot;=&quot;</code> exact, <code>&quot;&lt;&quot;</code> less than, <code>&quot;&gt;&quot;</code> greater than, <code>&quot;~&quot;</code> approx</td>
+</tr>
+<tr>
+<td><code>NormalStatus</code></td>
+<td><code>CodePhrase?</code></td>
+<td><code>&quot;N&quot;</code> normal, <code>&quot;H&quot;</code> high, <code>&quot;L&quot;</code> low, …</td>
+</tr>
+<tr>
+<td><code>NormalRange</code></td>
+<td><code>DvInterval&lt;DvQuantity&gt;?</code></td>
+<td>Reference range</td>
+</tr>
+</tbody>
+</table>
+<h2 id="dvcount"><code>DvCount</code></h2>
+<p>A dimensionless integer quantity (e.g. number of episodes, parity).</p>
+<pre><code class="lang-csharp">var parity = new DvCount { Magnitude = 2 };
+</code></pre>
+<h2 id="dvproportion"><code>DvProportion</code></h2>
+<p>Represents ratios, percentages, fractions, and unitary values.</p>
+<pre><code class="lang-csharp">// 75 %
+var saturation = new DvProportion
+{
+    Numerator   = 75,
+    Denominator = 100,
+    Type        = ProportionKind.Percent    // 2 = percent
+};
+
+// Ratio 1:4
+var ratio = new DvProportion
+{
+    Numerator   = 1,
+    Denominator = 4,
+    Type        = ProportionKind.Ratio      // 0 = ratio
+};
+</code></pre>
+<p><code>ProportionKind</code> values: <code>Ratio(0)</code>, <code>Unitary(1)</code>, <code>Percent(2)</code>, <code>Fraction(3)</code>, <code>IntegerFraction(4)</code>.</p>
+<h2 id="dvordinal"><code>DvOrdinal</code></h2>
+<p>A ranked item from a discrete ordered set. Stores both a numeric value and a symbol.</p>
+<pre><code class="lang-csharp">var painScore = new DvOrdinal
+{
+    Value  = 7,
+    Symbol = new DvCodedText { Value = &quot;Severe&quot;, DefiningCode = … }
+};
+</code></pre>
+<blockquote>
+<p><strong>Ordering</strong> — <code>DvOrdinal</code> implements <code>IComparable</code> using the numeric <code>Value</code>.</p>
+</blockquote>
+
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          © Claro Consulting Ltd. Docs licensed under <a href='https://creativecommons.org/licenses/by/4.0/'>CC-BY 4.0</a>. Libraries licensed under <a href='https://www.apache.org/licenses/LICENSE-2.0'>Apache 2.0</a>.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

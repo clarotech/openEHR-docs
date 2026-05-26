@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Basic Data Types | openEHR .NET Documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Basic Data Types | openEHR .NET Documentation ">
+      
+      <meta name="description" content="DvBoolean, DvState, and DvIdentifier.">
+      <link rel="icon" href="../../../images/favicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo.svg" alt="openEHR .NET">
+            openEHR .NET
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="basic-data-types">Basic Data Types</h1>
+
+<p>Namespace: <code>OpenEHR.RM.DataTypes.Basic</code></p>
+<p>The <strong>Basic</strong> package contains the root abstract class and three concrete leaf types that
+represent fundamental non-specialist values.</p>
+<h2 id="datavalue-abstract"><code>DataValue</code> (abstract)</h2>
+<p>All openEHR data-type classes inherit from <code>DataValue</code>. It carries no mandatory
+properties of its own but establishes the type hierarchy that allows any leaf value to
+be stored in an <code>Element.Value</code>.</p>
+<h2 id="dvboolean"><code>DvBoolean</code></h2>
+<p>A simple true/false value. Maps to <code>DV_BOOLEAN</code> in the spec.</p>
+<pre><code class="lang-csharp">var flag = new DvBoolean { Value = true };
+</code></pre>
+<blockquote>
+<p><strong>Invariant</strong> — <code>Value</code> must be set; the type has no meaningful null state.</p>
+</blockquote>
+<h2 id="dvstate"><code>DvState</code></h2>
+<p>Represents a state machine state. Contains a <code>DvCodedText</code> (the state name) and an
+optional boolean indicating whether the state is a terminal state.</p>
+<pre><code class="lang-csharp">var state = new DvState
+{
+    Value      = new DvCodedText { Value = &quot;active&quot;, DefiningCode = … },
+    IsTerminal = false
+};
+</code></pre>
+<blockquote>
+<p><strong>Note</strong> — <code>DvState</code> is rarely used in modern openEHR clinical archetypes; prefer
+<code>DvCodedText</code> for status values.</p>
+</blockquote>
+<h2 id="dvidentifier"><code>DvIdentifier</code></h2>
+<p>An identifier from an external system (e.g. a hospital MRN, an NHS number).</p>
+<pre><code class="lang-csharp">var mrn = new DvIdentifier
+{
+    Issuer   = &quot;NHS Digital&quot;,
+    Assigner = &quot;NHS Digital&quot;,
+    Id       = &quot;943-476-0165&quot;,
+    Type     = &quot;NHS number&quot;
+};
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Issuer</code></td>
+<td>✅</td>
+<td>Name of the organisation that issued the ID</td>
+</tr>
+<tr>
+<td><code>Assigner</code></td>
+<td>✅</td>
+<td>Name of the organisation that assigned it</td>
+</tr>
+<tr>
+<td><code>Id</code></td>
+<td>✅</td>
+<td>The identifier string</td>
+</tr>
+<tr>
+<td><code>Type</code></td>
+<td>❌</td>
+<td>Optional classification (e.g. &quot;MRN&quot;, &quot;NHSNumber&quot;)</td>
+</tr>
+</tbody>
+</table>
+
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          © Claro Consulting Ltd. Docs licensed under <a href='https://creativecommons.org/licenses/by/4.0/'>CC-BY 4.0</a>. Libraries licensed under <a href='https://www.apache.org/licenses/LICENSE-2.0'>Apache 2.0</a>.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

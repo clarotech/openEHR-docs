@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Data Types | openEHR .NET Documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Data Types | openEHR .NET Documentation ">
+      
+      <meta name="description" content="Overview of the Clarotech.OpenEHR.RM.Datatypes library.">
+      <link rel="icon" href="../../images/favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/logo.svg" alt="openEHR .NET">
+            openEHR .NET
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="data-types--clarotechopenehrrmdatatypes">Data Types — <code>Clarotech.OpenEHR.RM.Datatypes</code></h1>
+
+<p><a href="https://www.nuget.org/packages/Clarotech.OpenEHR.RM.Datatypes"><img src="https://img.shields.io/nuget/v/Clarotech.OpenEHR.RM.Datatypes" alt="NuGet"></a>
+<a href="https://github.com/clarotech/openEHR-datatypes"><img src="https://img.shields.io/badge/source-clarotech%2FopenEHR--datatypes-blue?logo=github" alt="GitHub"></a></p>
+<p>A C# implementation of the <strong>openEHR RM Release 1.1.0 Data Types</strong> specification
+(<code>DATA_TYPES</code> package).  All leaf values in an openEHR record are instances of
+a class from this library.</p>
+<h2 id="namespaces">Namespaces</h2>
+<table>
+<thead>
+<tr>
+<th>Namespace</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>OpenEHR.RM.DataTypes.Basic</code></td>
+<td><code>DataValue</code> (abstract base), <code>DvBoolean</code>, <code>DvState</code>, <code>DvIdentifier</code></td>
+</tr>
+<tr>
+<td><code>OpenEHR.RM.DataTypes.Text</code></td>
+<td><code>DvText</code>, <code>DvCodedText</code>, <code>CodePhrase</code>, <code>TerminologyId</code></td>
+</tr>
+<tr>
+<td><code>OpenEHR.RM.DataTypes.Quantity</code></td>
+<td><code>DvOrdered&lt;T&gt;</code>, <code>DvQuantifiable&lt;T&gt;</code>, <code>DvQuantity</code>, <code>DvCount</code>, <code>DvProportion</code>, <code>DvOrdinal</code>, <code>DvAmount</code>, <code>DvMeasurable</code></td>
+</tr>
+<tr>
+<td><code>OpenEHR.RM.DataTypes.DateTime</code></td>
+<td><code>DvTemporal&lt;T&gt;</code>, <code>DvDate</code>, <code>DvTime</code>, <code>DvDateTime</code>, <code>DvDuration</code></td>
+</tr>
+<tr>
+<td><code>OpenEHR.RM.DataTypes.TimeSpecification</code></td>
+<td><code>DvTimeSpecification</code>, <code>DvPeriodicTime</code>, <code>DvGeneralTimeSpecification</code></td>
+</tr>
+<tr>
+<td><code>OpenEHR.RM.DataTypes.Encapsulated</code></td>
+<td><code>DvEncapsulated</code>, <code>DvMultimedia</code>, <code>DvParsable</code></td>
+</tr>
+<tr>
+<td><code>OpenEHR.RM.DataTypes.Uri</code></td>
+<td><code>DvUri</code>, <code>DvEhrUri</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="installation">Installation</h2>
+<pre><code class="lang-bash">dotnet add package Clarotech.OpenEHR.RM.Datatypes
+</code></pre>
+<h2 id="quick-example">Quick example</h2>
+<pre><code class="lang-csharp">using OpenEHR.RM.DataTypes.Text;
+using OpenEHR.RM.DataTypes.Quantity;
+
+// A plain text value
+var note = new DvText(&quot;Patient reports mild headache.&quot;);
+
+// A coded term (SNOMED CT)
+var diagnosis = new DvCodedText
+{
+    Value         = &quot;Headache&quot;,
+    DefiningCode  = new CodePhrase(new TerminologyId(&quot;SNOMED-CT&quot;), &quot;25064002&quot;)
+};
+
+// A physical quantity with units
+var heartRate = new DvQuantity { Magnitude = 72, Units = &quot;/min&quot; };
+</code></pre>
+<h2 id="guide-sections">Guide sections</h2>
+<ul>
+<li><a href="guide/overview.html">Introduction</a></li>
+<li><a href="guide/basic.html">Basic Data Types</a></li>
+<li><a href="guide/text.html">Text Types</a></li>
+<li><a href="guide/quantity.html">Quantity Types</a></li>
+<li><a href="guide/datetime.html">Date &amp; Time Types</a></li>
+<li><a href="guide/encapsulated.html">Encapsulated Data</a></li>
+<li><a href="guide/uri.html">URI Types</a></li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          © Claro Consulting Ltd. Docs licensed under <a href='https://creativecommons.org/licenses/by/4.0/'>CC-BY 4.0</a>. Libraries licensed under <a href='https://www.apache.org/licenses/LICENSE-2.0'>Apache 2.0</a>.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

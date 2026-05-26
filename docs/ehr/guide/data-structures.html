@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Data Structures | openEHR .NET Documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Data Structures | openEHR .NET Documentation ">
+      
+      <meta name="description" content="ItemTree, ItemList, ItemTable, ItemSingle, Cluster, and Element.">
+      <link rel="icon" href="../../../images/favicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo.svg" alt="openEHR .NET">
+            openEHR .NET
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="data-structures">Data Structures</h1>
+
+<p>Namespace: <code>OpenEHR.RM.DataStructures</code></p>
+<p>openEHR uses a small set of generic container classes to carry an entry's clinical content.
+The choice between them is constrained by archetypes, not by the RM itself.</p>
+<h2 id="structure-types">Structure types</h2>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>openEHR equivalent</th>
+<th>Shape</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ItemTree</code></td>
+<td><code>ITEM_TREE</code></td>
+<td>Recursive tree of named items — most common</td>
+</tr>
+<tr>
+<td><code>ItemList</code></td>
+<td><code>ITEM_LIST</code></td>
+<td>Flat ordered list of <code>Element</code> (no nesting)</td>
+</tr>
+<tr>
+<td><code>ItemTable</code></td>
+<td><code>ITEM_TABLE</code></td>
+<td>Table of rows, each a <code>Cluster</code></td>
+</tr>
+<tr>
+<td><code>ItemSingle</code></td>
+<td><code>ITEM_SINGLE</code></td>
+<td>Exactly one <code>Element</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="itemtree"><code>ItemTree</code></h2>
+<p>The workhorse structure. Holds a flat or nested mix of <code>Element</code> and <code>Cluster</code> items.</p>
+<pre><code class="lang-csharp">var tree = new ItemTree
+{
+    Name  = new DvText(&quot;Tree&quot;),
+    Items = new List&lt;Item&gt;
+    {
+        new Element
+        {
+            Name            = new DvText(&quot;Systolic&quot;),
+            ArchetypeNodeId = &quot;at0004&quot;,
+            Value           = new DvQuantity { Magnitude = 120, Units = &quot;mm[Hg]&quot; }
+        },
+        new Element
+        {
+            Name            = new DvText(&quot;Diastolic&quot;),
+            ArchetypeNodeId = &quot;at0005&quot;,
+            Value           = new DvQuantity { Magnitude = 80, Units = &quot;mm[Hg]&quot; }
+        }
+    }
+};
+</code></pre>
+<h2 id="cluster"><code>Cluster</code></h2>
+<p>A named group of <code>Item</code> objects within an <code>ItemTree</code>, allowing nested structure.</p>
+<pre><code class="lang-csharp">var bpCluster = new Cluster
+{
+    Name            = new DvText(&quot;Blood pressure reading&quot;),
+    ArchetypeNodeId = &quot;at0006&quot;,
+    Items           = new List&lt;Item&gt; { systolicElement, diastolicElement }
+};
+</code></pre>
+<h2 id="element"><code>Element</code></h2>
+<p>The atomic leaf node. Each <code>Element</code> holds exactly one <code>DataValue</code> in its <code>Value</code> property.</p>
+<pre><code class="lang-csharp">var ageElement = new Element
+{
+    Name            = new DvText(&quot;Age&quot;),
+    ArchetypeNodeId = &quot;at0007&quot;,
+    Value           = new DvCount { Magnitude = 45 }
+};
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Value</code></td>
+<td><code>DataValue?</code></td>
+<td>The clinical value (any <code>DvXxx</code> type)</td>
+</tr>
+<tr>
+<td><code>NullFlavour</code></td>
+<td><code>DvCodedText?</code></td>
+<td>Reason value is absent (e.g. &quot;unknown&quot;, &quot;not asked&quot;)</td>
+</tr>
+<tr>
+<td><code>NullReason</code></td>
+<td><code>DvText?</code></td>
+<td>Free-text reason for null value</td>
+</tr>
+</tbody>
+</table>
+<h3 id="null-flavours">Null flavours</h3>
+<p>When <code>Value</code> is <code>null</code>, <code>NullFlavour</code> must be set using the openEHR null-flavour vocabulary
+(<code>terminology_id = &quot;openehr&quot;</code>):</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>253</td>
+<td>unknown</td>
+</tr>
+<tr>
+<td>271</td>
+<td>not applicable</td>
+</tr>
+<tr>
+<td>272</td>
+<td>masked</td>
+</tr>
+<tr>
+<td>273</td>
+<td>not asked</td>
+</tr>
+</tbody>
+</table>
+<h2 id="itemlist"><code>ItemList</code></h2>
+<p>A flat ordered list — useful for simple observation panels where no nesting is needed.</p>
+<pre><code class="lang-csharp">var medications = new ItemList
+{
+    Name  = new DvText(&quot;Medication list&quot;),
+    Items = new List&lt;Element&gt; { drugElement, doseElement, routeElement }
+};
+</code></pre>
+
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          © Claro Consulting Ltd. Docs licensed under <a href='https://creativecommons.org/licenses/by/4.0/'>CC-BY 4.0</a>. Libraries licensed under <a href='https://www.apache.org/licenses/LICENSE-2.0'>Apache 2.0</a>.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

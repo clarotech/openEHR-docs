@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>EHR Reference Model | openEHR .NET Documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="EHR Reference Model | openEHR .NET Documentation ">
+      
+      <meta name="description" content="Overview of the Clarotech.OpenEHR.RM library.">
+      <link rel="icon" href="../../images/favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/logo.svg" alt="openEHR .NET">
+            openEHR .NET
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="ehr-reference-model--clarotechopenehrrm">EHR Reference Model — <code>Clarotech.OpenEHR.RM</code></h1>
+
+<p><a href="https://www.nuget.org/packages/Clarotech.OpenEHR.RM"><img src="https://img.shields.io/nuget/v/Clarotech.OpenEHR.RM" alt="NuGet"></a>
+<a href="https://github.com/clarotech/openEHR-ehr"><img src="https://img.shields.io/badge/source-clarotech%2FopenEHR--ehr-blue?logo=github" alt="GitHub"></a></p>
+<p>A C# implementation of the <strong>openEHR RM Release 1.1.0</strong> structural classes, covering
+the EHR, Composition, Common, Support, and Data Structures packages.</p>
+<blockquote>
+<p><strong>Depends on</strong> <code>Clarotech.OpenEHR.RM.Datatypes</code> — all <code>DvXxx</code> leaf values come
+from that package.</p>
+</blockquote>
+<h2 id="namespaces">Namespaces</h2>
+<table>
+<thead>
+<tr>
+<th>Namespace</th>
+<th>openEHR package</th>
+<th>Key classes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>OpenEHR.RM.Ehr</code></td>
+<td>EHR</td>
+<td><code>Ehr</code>, <code>EhrStatus</code>, <code>EhrAccess</code>, <code>Folder</code></td>
+</tr>
+<tr>
+<td><code>OpenEHR.RM.Composition</code></td>
+<td>Composition</td>
+<td><code>Composition</code>, <code>Section</code>, <code>EventContext</code></td>
+</tr>
+<tr>
+<td><code>OpenEHR.RM.Composition.Content.Entry</code></td>
+<td>Entry</td>
+<td><code>Observation</code>, <code>Evaluation</code>, <code>Instruction</code>, <code>Action</code>, <code>AdminEntry</code>, <code>GenericEntry</code></td>
+</tr>
+<tr>
+<td><code>OpenEHR.RM.Composition.Content.Navigation</code></td>
+<td>Navigation</td>
+<td><code>Section</code></td>
+</tr>
+<tr>
+<td><code>OpenEHR.RM.Common</code></td>
+<td>Common</td>
+<td><code>Archetyped</code>, <code>Link</code>, <code>Locatable</code>, <code>Pathable</code></td>
+</tr>
+<tr>
+<td><code>OpenEHR.RM.Common.Archetyped</code></td>
+<td>Archetyped</td>
+<td><code>Archetyped</code>, <code>TemplateId</code>, <code>Locatable</code></td>
+</tr>
+<tr>
+<td><code>OpenEHR.RM.Common.Generic</code></td>
+<td>Generic</td>
+<td><code>PartyIdentified</code>, <code>PartyRelated</code>, <code>PartySelf</code>, <code>AuditDetails</code>, <code>Attestation</code></td>
+</tr>
+<tr>
+<td><code>OpenEHR.RM.Common.ChangeControl</code></td>
+<td>Change Control</td>
+<td><code>Contribution</code>, <code>Version&lt;T&gt;</code>, <code>OriginalVersion&lt;T&gt;</code>, <code>ImportedVersion&lt;T&gt;</code></td>
+</tr>
+<tr>
+<td><code>OpenEHR.RM.DataStructures</code></td>
+<td>Data Structures</td>
+<td><code>ItemTree</code>, <code>ItemList</code>, <code>ItemTable</code>, <code>ItemSingle</code>, <code>Cluster</code>, <code>Element</code></td>
+</tr>
+<tr>
+<td><code>OpenEHR.RM.Support.Identification</code></td>
+<td>Identification</td>
+<td><code>HierObjectId</code>, <code>ObjectVersionId</code>, <code>TemplateId</code>, <code>ArchetypeId</code>, <code>TerminologyId</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="installation">Installation</h2>
+<pre><code class="lang-bash">dotnet add package Clarotech.OpenEHR.RM
+# Clarotech.OpenEHR.RM.Datatypes is pulled in automatically as a dependency
+</code></pre>
+<h2 id="structural-overview">Structural overview</h2>
+<pre><code>Ehr
+├── EhrStatus
+├── EhrAccess
+└── Composition (via Contribution/Version&lt;T&gt;)
+    ├── EventContext
+    ├── Section
+    │   └── Entry (Observation | Evaluation | Instruction | Action)
+    │       └── ItemStructure (ItemTree | ItemList | …)
+    │           └── Element
+    │               └── DataValue  (any DvXxx from datatypes)
+    └── …
+</code></pre>
+<h2 id="guide-sections">Guide sections</h2>
+<ul>
+<li><a href="guide/overview.html">Introduction</a></li>
+<li><a href="guide/ehr.html">EHR &amp; Versioning</a></li>
+<li><a href="guide/composition.html">Composition</a></li>
+<li><a href="guide/common.html">Common (Audit, Link, Party)</a></li>
+<li><a href="guide/data-structures.html">Data Structures</a></li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          © Claro Consulting Ltd. Docs licensed under <a href='https://creativecommons.org/licenses/by/4.0/'>CC-BY 4.0</a>. Libraries licensed under <a href='https://www.apache.org/licenses/LICENSE-2.0'>Apache 2.0</a>.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Composition | openEHR .NET Documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Composition | openEHR .NET Documentation ">
+      
+      <meta name="description" content="The Composition, Section, and Entry classes.">
+      <link rel="icon" href="../../../images/favicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo.svg" alt="openEHR .NET">
+            openEHR .NET
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="composition">Composition</h1>
+
+<p>Namespace: <code>OpenEHR.RM.Composition</code>, <code>OpenEHR.RM.Composition.Content.Entry</code></p>
+<p>A <strong>Composition</strong> is the top-level clinical document in openEHR — the unit of clinical
+meaning that a clinician creates, signs, and submits.</p>
+<h2 id="composition-1"><code>Composition</code></h2>
+<pre><code class="lang-csharp">var composition = new Composition
+{
+    Name            = new DvText(&quot;Vital Signs&quot;),
+    ArchetypeNodeId = &quot;openEHR-EHR-COMPOSITION.encounter.v1&quot;,
+    ArchetypeDetails = new Archetyped
+    {
+        ArchetypeId = new ArchetypeId(&quot;openEHR-EHR-COMPOSITION.encounter.v1&quot;),
+        RmVersion   = &quot;1.1.0&quot;
+    },
+    Language  = new CodePhrase(new TerminologyId(&quot;ISO_639-1&quot;), &quot;en&quot;),
+    Territory = new CodePhrase(new TerminologyId(&quot;ISO_3166-1&quot;), &quot;GB&quot;),
+    Category  = new DvCodedText
+    {
+        Value        = &quot;event&quot;,
+        DefiningCode = new CodePhrase(new TerminologyId(&quot;openehr&quot;), &quot;433&quot;)
+    },
+    Composer = new PartyIdentified { Name = &quot;Dr Alice Smith&quot; },
+    Context  = new EventContext
+    {
+        StartTime = new DvDateTime(DateTimeOffset.UtcNow.ToString(&quot;o&quot;)),
+        Setting   = new DvCodedText { Value = &quot;primary medical care&quot;, DefiningCode = … }
+    },
+    Content = new List&lt;ContentItem&gt; { myObservation }
+};
+</code></pre>
+<p>Key mandatory properties:</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Language</code></td>
+<td>ISO 639-1 language code for the composition content</td>
+</tr>
+<tr>
+<td><code>Territory</code></td>
+<td>ISO 3166-1 country where the composition was created</td>
+</tr>
+<tr>
+<td><code>Category</code></td>
+<td><code>&quot;event&quot;</code> (point-in-time) or <code>&quot;persistent&quot;</code> (ongoing)</td>
+</tr>
+<tr>
+<td><code>Composer</code></td>
+<td>The person or system authoring the composition</td>
+</tr>
+<tr>
+<td><code>Context</code></td>
+<td>Clinical context (care setting, timestamps, participants)</td>
+</tr>
+<tr>
+<td><code>Content</code></td>
+<td>Ordered list of <code>ContentItem</code> (Section or Entry)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="section"><code>Section</code></h2>
+<p>A grouping container within a composition, equivalent to a heading in a clinical document.</p>
+<pre><code class="lang-csharp">var historySection = new Section
+{
+    Name           = new DvText(&quot;History&quot;),
+    ArchetypeNodeId = &quot;at0001&quot;,
+    Items          = new List&lt;ContentItem&gt; { chiefComplaintObservation }
+};
+</code></pre>
+<h2 id="entries">Entries</h2>
+<p>Four archetyped entry types represent the four kinds of clinical statement:</p>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>openEHR code</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Observation</code></td>
+<td><code>OBSERVATION</code></td>
+<td>Measurements, findings</td>
+</tr>
+<tr>
+<td><code>Evaluation</code></td>
+<td><code>EVALUATION</code></td>
+<td>Assessments, diagnoses, goals</td>
+</tr>
+<tr>
+<td><code>Instruction</code></td>
+<td><code>INSTRUCTION</code></td>
+<td>Orders, prescriptions</td>
+</tr>
+<tr>
+<td><code>Action</code></td>
+<td><code>ACTION</code></td>
+<td>Performed procedures, dispensed medications</td>
+</tr>
+</tbody>
+</table>
+<h3 id="observation-example"><code>Observation</code> example</h3>
+<pre><code class="lang-csharp">var hrObservation = new Observation
+{
+    Name             = new DvText(&quot;Heart rate&quot;),
+    ArchetypeNodeId  = &quot;openEHR-EHR-OBSERVATION.pulse.v2&quot;,
+    Language         = new CodePhrase(new TerminologyId(&quot;ISO_639-1&quot;), &quot;en&quot;),
+    Encoding         = new CodePhrase(new TerminologyId(&quot;IANA_character-sets&quot;), &quot;UTF-8&quot;),
+    Subject          = new PartySelf(),
+    Data = new History&lt;ItemStructure&gt;
+    {
+        Name   = new DvText(&quot;History&quot;),
+        Events = new List&lt;Event&lt;ItemStructure&gt;&gt;
+        {
+            new PointEvent&lt;ItemStructure&gt;
+            {
+                Name = new DvText(&quot;Any event&quot;),
+                Time = new DvDateTime(DateTimeOffset.UtcNow.ToString(&quot;o&quot;)),
+                Data = new ItemTree
+                {
+                    Name  = new DvText(&quot;Tree&quot;),
+                    Items = new List&lt;Item&gt;
+                    {
+                        new Element
+                        {
+                            Name            = new DvText(&quot;Rate&quot;),
+                            ArchetypeNodeId = &quot;at0004&quot;,
+                            Value           = new DvQuantity { Magnitude = 72, Units = &quot;/min&quot; }
+                        }
+                    }
+                }
+            }
+        }
+    }
+};
+</code></pre>
+
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          © Claro Consulting Ltd. Docs licensed under <a href='https://creativecommons.org/licenses/by/4.0/'>CC-BY 4.0</a>. Libraries licensed under <a href='https://www.apache.org/licenses/LICENSE-2.0'>Apache 2.0</a>.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

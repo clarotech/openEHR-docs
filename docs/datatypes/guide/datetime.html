@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Date &amp; Time Types | openEHR .NET Documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Date &amp; Time Types | openEHR .NET Documentation ">
+      
+      <meta name="description" content="DvDate, DvTime, DvDateTime, DvDuration, and partial/complete ISO 8601 handling.">
+      <link rel="icon" href="../../../images/favicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo.svg" alt="openEHR .NET">
+            openEHR .NET
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="date--time-types">Date &amp; Time Types</h1>
+
+<p>Namespace: <code>OpenEHR.RM.DataTypes.DateTime</code></p>
+<p>All temporal types derive from <code>DvTemporal&lt;T&gt;</code> (which itself derives from <code>DvQuantifiable&lt;T&gt;</code>)
+and are based on <strong>ISO 8601</strong>. A key openEHR feature is support for <em>partial</em> values — for
+example a date of birth where only the year is known.</p>
+<h2 id="dvdate"><code>DvDate</code></h2>
+<p>An ISO 8601 calendar date, optionally partial.</p>
+<pre><code class="lang-csharp">// Complete date
+var dob = new DvDate(&quot;1985-03-22&quot;);
+
+// Year and month only (day unknown)
+var approx = new DvDate(&quot;1985-03&quot;);
+
+// Year only
+var yearOnly = new DvDate(&quot;1985&quot;);
+</code></pre>
+<p>Partial precision is indicated by the length of the value string.</p>
+<h2 id="dvtime"><code>DvTime</code></h2>
+<p>An ISO 8601 time of day, optionally partial, optionally timezone-aware.</p>
+<pre><code class="lang-csharp">var appointmentTime = new DvTime(&quot;09:30:00+01:00&quot;);
+var hourOnly        = new DvTime(&quot;09&quot;);
+</code></pre>
+<h2 id="dvdatetime"><code>DvDateTime</code></h2>
+<p>The most commonly used temporal type. Combines date and time, always with at least
+year precision.</p>
+<pre><code class="lang-csharp">// Full ISO 8601 datetime with timezone
+var recorded = new DvDateTime(&quot;2025-05-24T09:15:00+01:00&quot;);
+
+// UTC
+var utc = new DvDateTime(&quot;2025-05-24T08:15:00Z&quot;);
+
+// Date only (time not recorded)
+var dateOnly = new DvDateTime(&quot;2025-05-24&quot;);
+</code></pre>
+<blockquote>
+<p><strong>Tip</strong> — Always store times with a timezone offset in clinical records.
+<code>DateTimeOffset.Now.ToString(&quot;o&quot;)</code> produces a suitable string.</p>
+</blockquote>
+<h2 id="dvduration"><code>DvDuration</code></h2>
+<p>An ISO 8601 duration (period), used for age, duration of symptoms, dosing intervals, etc.</p>
+<pre><code class="lang-csharp">// 1 year, 2 months, 3 days, 4 hours
+var age = new DvDuration(&quot;P1Y2M3DT4H&quot;);
+
+// 30 minutes
+var halfHour = new DvDuration(&quot;PT30M&quot;);
+
+// Negative duration (e.g. pre-conception)
+var preConception = new DvDuration(&quot;-P280D&quot;);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Symbol</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Years</td>
+<td>Y</td>
+<td>P2Y</td>
+</tr>
+<tr>
+<td>Months</td>
+<td>M</td>
+<td>P3M</td>
+</tr>
+<tr>
+<td>Weeks</td>
+<td>W</td>
+<td>P1W</td>
+</tr>
+<tr>
+<td>Days</td>
+<td>D</td>
+<td>P10D</td>
+</tr>
+<tr>
+<td>Hours</td>
+<td>H</td>
+<td>PT12H</td>
+</tr>
+<tr>
+<td>Minutes</td>
+<td>M</td>
+<td>PT30M</td>
+</tr>
+<tr>
+<td>Seconds</td>
+<td>S</td>
+<td>PT45S</td>
+</tr>
+</tbody>
+</table>
+<h2 id="time-specification-types">Time Specification types</h2>
+<p>For recurring schedules (medication dosing, appointment series), see
+<code>OpenEHR.RM.DataTypes.TimeSpecification</code>:</p>
+<ul>
+<li><code>DvPeriodicTime</code> — a repeating schedule described by an iCalendar expression</li>
+<li><code>DvGeneralTimeSpecification</code> — a free-form schedule</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          © Claro Consulting Ltd. Docs licensed under <a href='https://creativecommons.org/licenses/by/4.0/'>CC-BY 4.0</a>. Libraries licensed under <a href='https://www.apache.org/licenses/LICENSE-2.0'>Apache 2.0</a>.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

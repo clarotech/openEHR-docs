@@ -1,0 +1,150 @@
+/*
+ * Clarotech openEHR Documentation — custom theme overrides
+ *
+ * This file extends the DocFX `modern` template.
+ * It is loaded after the base modern.css, so any rule here wins.
+ *
+ * TODO items are marked with "TODO:" — replace placeholder values with
+ * the real Claro Consulting brand assets before publishing.
+ *
+ * Modern template CSS variable reference:
+ *   https://dotnet.github.io/docfx/docs/template.html#customize-modern-template
+ */
+
+/* ── Brand colours ───────────────────────────────────────────────────────────
+   TODO: Replace these hex values with the official Claro Consulting palette.
+   The variables below map to the most visible UI chrome.
+   ──────────────────────────────────────────────────────────────────────────── */
+:root {
+  /* Primary accent — used for links, active TOC items, buttons */
+  --bs-primary:        #0055a5;   /* TODO: Claro primary blue */
+  --bs-primary-rgb:    0, 85, 165;
+
+  /* Navbar background */
+  --navbar-bg:         #003366;   /* TODO: Claro dark blue */
+  --navbar-text:       #ffffff;
+
+  /* Sidebar active item highlight */
+  --toc-active-bg:     #e8f0fb;   /* TODO: Claro light accent */
+  --toc-active-border: #0055a5;   /* TODO: match --bs-primary */
+}
+
+/* ── Navbar ──────────────────────────────────────────────────────────────────
+   TODO: Confirm brand wants a dark navbar or light.
+   ──────────────────────────────────────────────────────────────────────────── */
+.navbar {
+  background-color: var(--navbar-bg) !important;
+}
+
+.navbar .navbar-brand,
+.navbar .nav-link {
+  color: var(--navbar-text) !important;
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link:focus {
+  color: #cce0ff !important;  /* TODO: Claro hover colour */
+}
+
+/* ── Navbar dropdowns ────────────────────────────────────────────────────────
+   Without this, dropdown items inherit --navbar-text (white) from the .nav-link
+   rule above but sit on Bootstrap's default white dropdown background, making
+   them invisible until hovered.  Give the panel a dark background to match the
+   navbar and ensure text is always readable.
+   ──────────────────────────────────────────────────────────────────────────── */
+.navbar .dropdown-menu {
+  background-color: #00438a;          /* slightly lighter than navbar for depth */
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.navbar .dropdown-item {
+  color: #ffffff !important;
+}
+
+.navbar .dropdown-item:hover,
+.navbar .dropdown-item:focus {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #cce0ff !important;
+}
+
+.navbar .dropdown-item.active,
+.navbar .dropdown-item:active {
+  background-color: var(--bs-primary);
+  color: #ffffff !important;
+}
+
+/* ── Logo sizing ─────────────────────────────────────────────────────────────
+   TODO: Adjust once the real logo SVG is in place.
+   ──────────────────────────────────────────────────────────────────────────── */
+.navbar-brand img {
+  max-height: 36px;
+  width: auto;
+}
+
+/* ── Footer ──────────────────────────────────────────────────────────────────
+   TODO: Match final copy in docfx.json _appFooter.
+   ──────────────────────────────────────────────────────────────────────────── */
+footer {
+  background-color: #f5f5f5;
+  border-top: 1px solid #dee2e6;
+  padding: 1rem 0;
+  font-size: 0.875rem;
+  color: #6c757d;
+}
+
+/* ── Code blocks ─────────────────────────────────────────────────────────────
+   Slightly warmer background than the modern default.
+   ──────────────────────────────────────────────────────────────────────────── */
+pre, code {
+  background-color: #f8f9fc;
+  border-radius: 4px;
+}
+
+pre {
+  border-left: 4px solid var(--bs-primary);
+  padding: 1rem 1.25rem;
+}
+
+/* ── Note / warning callouts (DocFX > blockquote) ───────────────────────────*/
+blockquote {
+  border-left: 4px solid #ffc107;
+  background-color: #fffdf0;
+  padding: 0.75rem 1rem;
+  margin: 1rem 0;
+}
+
+blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* ── API reference — member signature styling ───────────────────────────────*/
+.signature {
+  background-color: #f0f4f8;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+/* ── Responsive table ────────────────────────────────────────────────────────*/
+.table-responsive {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table th {
+  background-color: var(--toc-active-bg);
+  font-weight: 600;
+}
+
+table th, table td {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #dee2e6;
+  vertical-align: top;
+}
